@@ -1,0 +1,69 @@
+{
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": {
+        "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"liveness-http\",\"test\":\"liveness\"},\"name\":\"liveness-http\",\"namespace\":\"test2\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"liveness-http\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"liveness-http\"}},\"spec\":{\"containers\":[{\"args\":[\"/server\"],\"image\":\"k8s.gcr.io/liveness\",\"livenessProbe\":{\"httpGet\":{\"httpHeaders\":[{\"name\":\"X-Custom-Header\",\"value\":\"Awesome\"}],\"path\":\"/healthz\",\"port\":8080},\"initialDelaySeconds\":3,\"periodSeconds\":3},\"name\":\"liveness\",\"readinessProbe\":{\"httpGet\":{\"httpHeaders\":[{\"name\":\"X-Custom-Header\",\"value\":\"Awesome\"}],\"path\":\"/healthz\",\"port\":8080},\"initialDelaySeconds\":3,\"periodSeconds\":3}}]}}}}\n"
+        },
+        "labels": {
+            "app": "liveness-http",
+            "test": "liveness"
+        },
+        "name": "liveness-http",
+        "namespace": "test2"
+    },
+    "spec": {
+        "replicas": 1,
+        "selector": {
+            "matchLabels": {
+                "app": "liveness-http"
+            }
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "app": "liveness-http"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "args": [
+                            "/server"
+                        ],
+                        "image": "k8s.gcr.io/liveness",
+                        "livenessProbe": {
+                            "httpGet": {
+                                "httpHeaders": [
+                                    {
+                                        "name": "X-Custom-Header",
+                                        "value": "Awesome"
+                                    }
+                                ],
+                                "path": "/healthz",
+                                "port": 8080
+                            },
+                            "initialDelaySeconds": 3,
+                            "periodSeconds": 3
+                        },
+                        "name": "liveness",
+                        "readinessProbe": {
+                            "httpGet": {
+                                "httpHeaders": [
+                                    {
+                                        "name": "X-Custom-Header",
+                                        "value": "Awesome"
+                                    }
+                                ],
+                                "path": "/healthz",
+                                "port": 8080
+                            },
+                            "initialDelaySeconds": 3,
+                            "periodSeconds": 3
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

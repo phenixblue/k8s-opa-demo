@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: liveness-http
+  labels:
+    app: liveness-http
+    test: liveness
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: liveness-http
+  template:
+    metadata:
+      labels:
+        app: liveness-http
+    spec:
+      containers:
+      - name: liveness
+        image: k8s.gcr.io/liveness
+        args:
+        - /server
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+            httpHeaders:
+            - name: X-Custom-Header
+              value: Awesome
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+            httpHeaders:
+            - name: X-Custom-Header
+              value: Awesome
+          initialDelaySeconds: 3
+          periodSeconds: 3
